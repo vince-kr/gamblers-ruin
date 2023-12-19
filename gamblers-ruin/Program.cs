@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace gamblers_ruin
 /*
@@ -22,16 +18,17 @@ the player if they want to play again.
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("=======================\n==  GAMBLER'S RUIN  ==\n=======================\n");
-            int playerPot = askInitialPot();
-            int target = askTarget(playerPot);
+            int playerPot = AskInitialPot();
+            int target = AskTarget(playerPot);
 
             while (playerPot < target && playerPot > 0)
             {
                 Console.WriteLine("Let's ROLL THE DICE!");
-                int sumDiceRolls = rollDice() + rollDice();
+                var rnd = new Random();
+                int sumDiceRolls = rnd.Next(1, 7) + rnd.Next(1, 7);
                 Console.WriteLine($"Result: {sumDiceRolls}");
                 if (sumDiceRolls < 6)
                 {
@@ -58,33 +55,7 @@ the player if they want to play again.
             Console.ReadKey();
         }
 
-        private static int rollDice()
-        {
-            return new Random().Next(1, 7);
-        }
-
-        private static int askTarget(int playerPot)
-        {
-            int target = 0;
-
-            Console.Write("Grrreat! And how much do you want to walk away with? ");
-            do
-            {
-                String userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out target))
-                {
-                    if (target <= playerPot)
-                    {
-                        Console.WriteLine("Target should be higher than your pot!\nTry again:");
-                    }
-                }
-                else { Console.WriteLine("That doesn't look like a number!\nTry again:"); }
-            } while (target <= playerPot);
-
-            return target;
-        }
-
-        private static int askInitialPot()
+        private static int AskInitialPot()
         {
             int pot = 0;
 
@@ -111,6 +82,27 @@ the player if they want to play again.
             } while (pot <= 0);
 
             return pot;
+        }
+
+        private static int AskTarget(int playerPot)
+        {
+            int target;
+
+            Console.Write("Grrreat! And how much do you want to walk away with? ");
+            do
+            {
+                String userInput = Console.ReadLine();
+                if (int.TryParse(userInput, out target))
+                {
+                    if (target <= playerPot)
+                    {
+                        Console.WriteLine("Target should be higher than your pot!\nTry again:");
+                    }
+                }
+                else { Console.WriteLine("That doesn't look like a number!\nTry again:"); }
+            } while (target <= playerPot);
+
+            return target;
         }
     }
 }
