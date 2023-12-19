@@ -31,15 +31,43 @@ the player if they want to play again.
             while (playerPot < target && playerPot > 0)
             {
                 Console.WriteLine("Let's ROLL THE DICE!");
-                playerPot++;
+                int sumDiceRolls = rollDice() + rollDice();
+                Console.WriteLine($"Result: {sumDiceRolls}");
+                if (sumDiceRolls < 6)
+                {
+                    Console.WriteLine("You win this roll!");
+                    playerPot++;
+                } else
+                {
+                    Console.WriteLine("You lose this roll!");
+                    playerPot--;
+                }
+                Console.WriteLine($"You have {playerPot} in the pot; target is {target}.");
+                Console.WriteLine("Press any key to continue.");
+                Console.ReadKey();
             }
+
+            if (playerPot == 0)
+            {
+                Console.WriteLine("Better luck next time...");
+            } else
+            {
+                Console.WriteLine("You've reached your target. Now get out of my face.");
+            }
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+        }
+
+        private static int rollDice()
+        {
+            return new Random().Next(1, 7);
         }
 
         private static int askTarget(int playerPot)
         {
             int target = 0;
 
-            Console.WriteLine("Grrreat! And how much do you want to walk away with?");
+            Console.Write("Grrreat! And how much do you want to walk away with? ");
             do
             {
                 String userInput = Console.ReadLine();
@@ -60,7 +88,7 @@ the player if they want to play again.
         {
             int pot = 0;
 
-            Console.WriteLine("Welcome, gambler! How much do you want to bet?");
+            Console.Write("Welcome, gambler! How much do you want to bet? ");
             do
             {
                 String userInput = Console.ReadLine();
