@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace gamblers_ruin
 /*
@@ -30,9 +31,10 @@ the player if they want to play again.
             while (playerPot < target && playerPot > 0)
             {
                 Console.WriteLine("Let's ROLL THE DICE!");
-                var rnd = new Random();
-                int sumDiceRolls = rnd.Next(1, 7) + rnd.Next(1, 7);
+                int[] diceRolls = RollDice(2);
+                int sumDiceRolls = diceRolls.Sum();
                 Console.WriteLine($"Result: {sumDiceRolls}");
+
                 if (sumDiceRolls < 6)
                 {
                     Console.WriteLine("You win this roll!");
@@ -47,6 +49,7 @@ the player if they want to play again.
                 Console.ReadKey();
             }
 
+            // Won or lost
             if (playerPot == 0)
             {
                 Console.WriteLine("Better luck next time...");
@@ -56,6 +59,19 @@ the player if they want to play again.
             }
             Console.WriteLine("Press any key to exit.");
             Console.ReadKey();
+        }
+
+        private static int[] RollDice(int count)
+        {
+            int[] results = new int[count];
+            var rnd = new Random();
+
+            for (int i = 0; i < count; i++)
+            {
+                results[i] = rnd.Next(1, 7);
+            }
+
+            return results;
         }
 
         private static int AskInitialPot()
