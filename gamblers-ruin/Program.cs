@@ -57,29 +57,18 @@ the player if they want to play again.
 
         private static int AskInitialPot()
         {
-            int pot = 0;
+            int pot;
+            int minimum = 1;
 
             Console.Write("Welcome, gambler! How much do you want to bet? ");
             do
             {
                 String userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out int num))
+                if (!int.TryParse(userInput, out pot) | pot < minimum)
                 {
-                    if (num > 0)
-                    {
-                        pot = num;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Initial pot must be greater than 0!\nTry again: ");
-                    }
-
+                    Console.Write($"Initial pot must be a number that is at least {minimum}!\nTry again: ");
                 }
-                else
-                {
-                    Console.WriteLine("That doesn't look like a number!\nTry again: ");
-                }
-            } while (pot <= 0);
+            } while (pot < minimum);
 
             return pot;
         }
