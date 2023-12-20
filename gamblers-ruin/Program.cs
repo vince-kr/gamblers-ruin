@@ -21,9 +21,12 @@ the player if they want to play again.
         static void Main()
         {
             Console.WriteLine("=======================\n==  GAMBLER'S RUIN  ==\n=======================\n");
+
+            // Ask player how much to bet and what their target is
             int playerPot = AskInitialPot();
             int target = AskTarget(playerPot);
 
+            // Start main game loop
             while (playerPot < target && playerPot > 0)
             {
                 Console.WriteLine("Let's ROLL THE DICE!");
@@ -57,41 +60,29 @@ the player if they want to play again.
 
         private static int AskInitialPot()
         {
-            int pot;
-            int minimum = 1;
-
-            Console.Write("Welcome, gambler! How much do you want to bet? ");
-            do
-            {
-                String userInput = Console.ReadLine();
-                if (!int.TryParse(userInput, out pot) | pot < minimum)
-                {
-                    Console.Write($"Initial pot must be a number that is at least {minimum}!\nTry again: ");
-                }
-            } while (pot < minimum);
-
-            return pot;
+            return AskInt("Welcome, gambler! How much do you want to bet? ", 1);
         }
 
         private static int AskTarget(int playerPot)
         {
-            int target;
+            return AskInt("Grrreat! And how much do you want to walk away with? ", playerPot+1);
+        }
+ 
+        private static int AskInt(String prompt, int minimum)
+        {
+            int result;
 
-            Console.Write("Grrreat! And how much do you want to walk away with? ");
+            Console.Write(prompt);
             do
             {
                 String userInput = Console.ReadLine();
-                if (int.TryParse(userInput, out target))
+                if (!int.TryParse(userInput, out result) | result < minimum)
                 {
-                    if (target <= playerPot)
-                    {
-                        Console.WriteLine("Target should be higher than your pot!\nTry again:");
-                    }
+                    Console.Write($"Please enter a NUMBER equal to or greater than {minimum}!\nTry again: ");
                 }
-                else { Console.WriteLine("That doesn't look like a number!\nTry again:"); }
-            } while (target <= playerPot);
+            } while (result < minimum);
 
-            return target;
+            return result;
         }
-    }
+   }
 }
